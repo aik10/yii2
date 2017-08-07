@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Categorys;
 
 AppAsset::register($this);
 ?>
@@ -27,30 +28,52 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Магазин',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $categorys = Categorys::find()->orderby(['c_name' => 'SORT_ASC'])->all();
+    $categoryItems = [];
+    foreach ($categorys as $category) {
+        array_push($categoryItems,
+            [
+                'label' => $category->c_name,
+                'url' => ['products/show-by-category', 'idCategory' => $category->id]
+            ]
+        );
+    }
+    // print_r($categoryItems);die();
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+            ['label' => 'Категории', 'url' => ['/categorys/index']],
+            ['label' => 'Товары', 'url' => ['/products/index']],
+            [
+                'label' => 'Товары по категориям',
+                'url' => ['/categorys/index'],
+                'options' => ['class' => 'dropdown'],
+                'template' => '<a href="{url}" class="{url-class}">{label}</a>',
+                'items' => $categoryItems
+            ],
+            ['label' => 'Журнал', 'url' => ['/log/index']],
+            ['label' => 'Приход', 'url' => ['/log/index', 'type'=>'add']],
+            ['label' => 'Расход', 'url' => ['/log/index', 'type'=>'sale']],
+            // ['label' => 'About', 'url' => ['/site/about']],
+            // ['label' => 'Contact', 'url' => ['/site/contact']],
+            // Yii::$app->user->isGuest ? (
+            //     ['label' => 'Login', 'url' => ['/site/login']]
+            // ) : (
+            //     '<li>'
+            //     . Html::beginForm(['/site/logout'], 'post')
+            //     . Html::submitButton(
+            //         'Logout (' . Yii::$app->user->identity->username . ')',
+            //         ['class' => 'btn btn-link logout']
+            //     )
+            //     . Html::endForm()
+            //     . '</li>'
+            // )
         ],
     ]);
     NavBar::end();
@@ -66,7 +89,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Магазин <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

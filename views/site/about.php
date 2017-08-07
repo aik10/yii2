@@ -15,5 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <code><?= __FILE__ ?></code>
-    <?php echo phpinfo();?>
+    <?php 
+    print_r(get_loaded_extensions());
+    echo '<br>';
+    echo phpinfo();
+
+    ?>
 </div>

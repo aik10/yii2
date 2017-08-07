@@ -1,1 +1,7 @@
-<h1>Hello, world!</h1>
+<?php
+    echo $popa . '<br>';
+    echo $id . '<br>';
+    foreach ($arr as $key => $value) {
+        echo $value . '<br>';
+    }
+?>

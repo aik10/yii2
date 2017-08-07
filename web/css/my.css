@@ -4,16 +4,18 @@ body {
 }
 
 #pages {
-    font-size: 80%;
-    width: 550px;
+    /*font-size: 80%;*/
+    /*width: 550px;*/
     margin: 0 auto;
+    /*text-align: center;*/
+    /*background: #fc0;*/
+    padding: 10px;
     text-align: center;
-    background: #fc0;
 }
 
 .test {
     background: #fc0;
-    float: right;
+    float: left;
 }
 
 .wrap {
